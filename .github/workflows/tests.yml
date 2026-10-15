@@ -1,0 +1,25 @@
+name: Tests
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Calculation tests
+        working-directory: packages/calc
+        run: npm ci && npm run typecheck && npm test
+      - name: AI rules tests
+        working-directory: packages/ai
+        run: npm ci && npm run typecheck && npm test
+      - name: City list tests
+        working-directory: packages/cities
+        run: npm ci && npm test
+      - name: App typecheck
+        working-directory: apps/mobile
+        run: npm ci && npm run typecheck

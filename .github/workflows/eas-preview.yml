@@ -1,0 +1,46 @@
+# Every pull request gets a cloud preview (EAS Update). The bot comments a link + QR on the PR.
+# Open it with Expo Go (or a development build) on any phone. Nothing runs on anyone's computer.
+name: EAS preview
+on:
+  pull_request:
+    paths:
+      - 'apps/mobile/**'
+      - 'packages/**'
+      - '.github/workflows/eas-preview.yml'
+
+concurrency:
+  group: eas-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  preview:
+    # Secrets are not available to pull requests from forks.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      # Public values only (they ship inside the app). Override with repository variables for other projects.
+      EXPO_PUBLIC_SUPABASE_URL: ${{ vars.EXPO_PUBLIC_SUPABASE_URL || 'https://drzepkwblzgwyogiddzi.supabase.co' }}
+      EXPO_PUBLIC_SUPABASE_KEY: ${{ vars.EXPO_PUBLIC_SUPABASE_KEY || 'sb_publishable_yEe1wK_AP4GBeQkpebXL2g_gb0sktWX' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/mobile/package-lock.json
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - name: Install app dependencies
+        working-directory: apps/mobile
+        run: npm ci
+      - name: Publish preview and comment on the PR
+        uses: expo/expo-github-action/preview@v8
+        with:
+          working-directory: apps/mobile
+          command: eas update --branch "${{ github.head_ref }}" --message "PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}" --non-interactive

@@ -1,0 +1,52 @@
+# Cloud builds for real phones (no Mac needed). Actions tab > "EAS build" > Run workflow.
+# Android: an installable APK link. iPhone: needs the Apple Developer account connected in Expo first.
+name: EAS build
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Which phone'
+        type: choice
+        options: [android, ios, all]
+        default: android
+      profile:
+        description: 'preview = test build, production = store build'
+        type: choice
+        options: [preview, production]
+        default: preview
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/mobile/package-lock.json
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - name: Install app dependencies
+        working-directory: apps/mobile
+        run: npm ci
+      - name: Start the cloud build
+        working-directory: apps/mobile
+        run: |
+          eas build --platform "${{ inputs.platform }}" --profile "${{ inputs.profile }}" --non-interactive --no-wait --json > builds.json
+          cat builds.json
+          {
+            echo "## EAS build started"
+            echo ""
+            node -e "
+              const b = JSON.parse(require('fs').readFileSync('builds.json', 'utf8'));
+              for (const x of (Array.isArray(b) ? b : [b])) console.log('- ' + x.platform + ': ' + (x.buildDetailsPageUrl || x.id));
+            "
+            echo ""
+            echo "Open the link when the build finishes (about 10-20 minutes). Android: download the APK from that page or scan its QR."
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -18,6 +18,12 @@ Kullanıcıya yanıtlar **Türkçe, kısa ve sade** olsun. Kod, commit mesajlar�
 - Abonelik RevenueCat, hata takibi Sentry, reklam AdMob, harita verisi **kendi kodumuz** (ücretli astroloji API'si yok), yapay zekâ Claude Sonnet serisi.
 - Capacitor değerlendirildi, Expo seçildi (bağlayıcısı var, iPhone derlemesi için Mac gerekmez).
 
+**Teslimat (KadirHan ve Talha farklı şehir ve bilgisayarlarda; her şey bulutta)**
+- Kod GitHub'da (hancaliskan77/auvane, private) tek doğru kaynak. **`expo start` ile yerel sunucu paylaşılmaz. Netlify kullanılmaz.**
+- PR açılınca GitHub Actions EAS Update ile bulut önizleme yayınlar ve PR'a QR/bağlantı yorumu yazar (Expo Go). Telefonda tam deneme EAS Build: Android APK bağlantısı, iPhone TestFlight (Apple Developer açılınca). Mac gerekmez.
+- Expo organizasyonu ortak hesaptır, ikisi de üyedir. Web çıktısı (`expo export --platform web`) yalnız ihtiyaç doğarsa ve KadirHan'a sorularak eklenir.
+- Anahtarlar (Expo token, Supabase service key, Claude) GitHub ve Supabase gizli alanlarında durur; koda ve sohbete yazılmaz. Ayrıntı: `docs/EAS-KURULUM.md`.
+
 **Mimari kuralı**
 - Kullanıcı bir kez kayıt olur; harita hesaplanır ve saklanır. Uygulama açılınca saklı metni okur. **Açılışta yapay zekâ çağrısı yok.**
 - Yapay zekâ yalnız premium ve ödüllü reklam için, gece toplu üretir.
