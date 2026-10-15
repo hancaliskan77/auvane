@@ -1,0 +1,12 @@
+{
+  "name": "auvane-ref",
+  "version": "1.0.0",
+  "description": "Reference calculation code and tests for Auvane",
+  "scripts": {
+    "test": "node test.mjs && node hd.test.mjs"
+  },
+  "dependencies": {
+    "astronomy-engine": "^2.1.19"
+  },
+  "private": true
+}

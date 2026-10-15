@@ -1,0 +1,98 @@
+{
+  "v": 3,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-12T10:45:00Z"
+  },
+  "title": "US App Prototype",
+  "launch": {
+    "view": "canvas"
+  },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "1 Onboarding",
+      "is_interactive": true
+    },
+    "Confirm.dc.html": {
+      "x": 470,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "2 Confirm details",
+      "is_interactive": true
+    },
+    "Free.dc.html": {
+      "x": 940,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "3 Free results",
+      "is_interactive": true
+    },
+    "Reward.dc.html": {
+      "x": 1410,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "4 Rewarded ad",
+      "is_interactive": true
+    },
+    "Unlocked.dc.html": {
+      "x": 1880,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "5 Theme unlocked",
+      "is_interactive": true
+    },
+    "Paywall.dc.html": {
+      "x": 2350,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "6 Paywall",
+      "is_interactive": true
+    },
+    "Today.dc.html": {
+      "x": 2820,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "7 Premium: Today",
+      "is_interactive": true
+    },
+    "Story.dc.html": {
+      "x": 3290,
+      "y": 0,
+      "w": 390,
+      "h": 1000,
+      "title": "8 Premium: Full story",
+      "is_interactive": true
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Confirm.dc.html",
+    "Free.dc.html",
+    "Reward.dc.html",
+    "Unlocked.dc.html",
+    "Paywall.dc.html",
+    "Today.dc.html",
+    "Story.dc.html"
+  ],
+  "notes": {
+    "t1": {
+      "x": 0,
+      "y": -260,
+      "text": "US prototype: from free to premium",
+      "kind": "title1",
+      "maxW": 3680
+    }
+  },
+  "designSystems": []
+}
