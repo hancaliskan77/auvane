@@ -49,6 +49,7 @@ Kullanıcıya yanıtlar **Türkçe, kısa ve sade** olsun. Kod, commit mesajlar�
 - İsim ve doğum verisini astroloji ve yapay zekâ sağlayıcılarına göndermeden önce açık onay. Veri silme düğmesi. 13+ yaş kapısı. "Satma/paylaşma" (CCPA/CPRA). 24 ay hareketsiz hesabı sil.
 
 ## Çalışma kuralları
+- **Konuşma kuralı (kalıcı, değişmez):** Kullanıcılar yazılımcı değil, "yazılımcıların üst aklı". Hiç bilmeyen biriyle konuşur gibi, çok kısa ve sade yaz; teknik terim kullanma. Karmaşık bir durumda, istenmese bile önce şema/görsel (ASCII diyagram veya artifact) ile anlat.
 - Yapım sırası ve her adımın "bitti sayılma kontrolü" şartnamede (bkz. `docs/LINKS.md`). Kontrol geçmeden sonraki adıma geçme.
 - Hesap testleri: `cd ref && npm install && npm test`. Hesap kodu değişirse önce test ekle/güncelle. Testler geçmeden birleştirme yok.
 - Anahtarları koda yazma. `.env` dosyaları git'e girmez. Gizli anahtarlar GitHub, Expo (EAS) ve Supabase'in gizli alanlarında durur. Uygulamaya yalnız herkese açık Supabase anahtarı girer.
