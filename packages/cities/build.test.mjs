@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+const d = JSON.parse(readFileSync('../../apps/mobile/src/data/cities.json', 'utf8'));
+const find = (name, region) => d.rows.find((r) => r[0] === name && r[1] === region);
+const tz = (r) => d.tzs[r[5]];
+assert.equal(tz(find('Brooklyn', 'New York')), 'America/New_York');
+assert.equal(tz(find('Phoenix', 'Arizona')), 'America/Phoenix');
+assert.equal(tz(find('Honolulu', 'Hawaii')), 'Pacific/Honolulu');
+assert.equal(tz(find('Los Angeles', 'California')), 'America/Los_Angeles');
+assert.equal(tz(find('Chicago', 'Illinois')), 'America/Chicago');
+assert.ok(d.rows.filter((r) => r[2] === 'US').length > 15000, 'US coverage');
+assert.ok(d.rows.find((r) => r[0] === 'Rize' || r[0] === 'Istanbul'), 'world cities present');
+assert.ok(d.rows.filter((r) => r[0] === 'Springfield').length >= 5, 'same-name cities are kept apart by region');
+console.log('cities data OK', d.rows.length, 'rows');

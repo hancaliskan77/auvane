@@ -3,6 +3,7 @@ import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Redirect, router } from 'expo-router';
 import { resolveBirth } from '@auvane/calc';
+import { placeLabel } from '../data/cities';
 import { getDraft } from '../lib/draft';
 import { fmtDate, fmtOffset, fmtTime, fmtUtc, zoneName } from '../lib/format';
 import { ensureSession, supabase } from '../lib/supabase';
@@ -39,7 +40,7 @@ export default function Confirm() {
   if (!d || !res || !base) return <Redirect href="/" />;
 
   const known = d.time !== null;
-  const placeLine = `${d.city.name}, ${d.city.region}, ${d.city.country}`;
+  const placeLine = placeLabel(d.city);
   const ok = res.status === 'ok';
 
   async function confirm() {

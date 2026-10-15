@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { City, searchCities } from '../data/cities';
+import { City, placeLabel, searchCities } from '../data/cities';
 import { getDraft, setDraft } from '../lib/draft';
 import { supabase } from '../lib/supabase';
 import { c, fonts } from '../lib/theme';
@@ -122,10 +122,10 @@ export default function Onboarding() {
           {options.length > 0 && (
             <View style={{ marginTop: 6, borderRadius: 10, borderWidth: 1, borderColor: c.border, backgroundColor: c.input, overflow: 'hidden' }}>
               {options.map((o, i) => (
-                <Pressable key={`${o.name}-${o.region}`} onPress={() => { setCity(o); setQuery(o.name); }}
+                <Pressable key={`${o.name}-${o.region}-${o.lat}-${o.lon}`} onPress={() => { setCity(o); setQuery(o.name); }}
                   style={{ paddingVertical: 10, paddingHorizontal: 14, borderTopWidth: i ? 1 : 0, borderTopColor: c.border }}>
                   <Text style={{ color: c.text, fontSize: 14 }}>{o.name}</Text>
-                  <Text style={{ color: c.muted, fontSize: 12 }}>{o.region}, {o.country}</Text>
+                  <Text style={{ color: c.muted, fontSize: 12 }}>{[o.region, o.country].filter(Boolean).join(', ')}</Text>
                 </Pressable>
               ))}
             </View>

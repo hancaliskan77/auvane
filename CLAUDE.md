@@ -31,7 +31,7 @@ Kullanıcıya yanıtlar **Türkçe, kısa ve sade** olsun. Kod, commit mesajlar�
 - Çin hayvanı: Çin Yeni Yılı sınırı (Ocak–Şubat doğumları önceki yılın hayvanı olabilir), `packages/calc/src/chinese.ts`. BaZi yok (ilk sürüm).
 
 **Doğum yeri ve saat**
-- Serbest metin yok. Çevrimdışı GeoNames şehir listesinden seçilir (CC BY, IANA saat dilimi dahil). Onay ekranında yerel saat, o tarihteki saat dilimi ve UTC gösterilir.
+- Serbest metin yok. Çevrimdışı şehir listesinden seçilir (`packages/cities`: GeoNames verisi CC BY 4.0, `all-the-cities` üzerinden; saat dilimi `tz-lookup`, CC0). ABD'de 1.000+ nüfuslu her yer, dünyada 100 bin+ şehir. **Uygulamada GeoNames kaynak gösterimi şart** (hakkında ekranı). Onay ekranında yerel saat, o tarihteki saat dilimi ve UTC gösterilir.
 - Belirsiz yaz saati saati (ör. New York 2026-11-01 01:30) kullanıcıya sorulur; var olmayan saat (2026-03-08 02:30) reddedilir.
 - Doğrulama: hesabımız üç bağımsız motorla (PyEphem, Astropy, astronomy-engine) doğrulandı; testler spec'teki değerlere kilitli. İsteğe bağlı dış karşılaştırma için `verifyAgainstApi` (tolerans Güneş/Ay 0.5°, Yükselen 1°) test aracı olarak duruyor.
 - Yükselen bir burç sınırına 2°'den yakınsa "kesin değil" notu. Doğum saati bilinmiyorsa Yükselen ve Human Design gizlenir.
@@ -61,4 +61,4 @@ Kullanıcıya yanıtlar **Türkçe, kısa ve sade** olsun. Kod, commit mesajlar�
 `ref/` klasöründeki `calc.mjs` ve `hd.mjs` kodunu TypeScript'e taşı (ör. `packages/calc`). `test.mjs` ve `hd.test.mjs` aynı değerlerle geçsin. Human Design için KadirHan'dan gelecek 4 ek Jovian Archive haritasını (Manifestor, Projector, Reflector, Manifesting Generator) teste ekle; şu an yalnız 1 gerçek harita doğrulandı.
 
 ## Açık maddeler (KadirHan takip eder)
-marka/App Store/alan adı kontrolleri, Apple Developer hesabı, avukat ve muhasebeci maddeleri (gizlilik metni, W-8BEN), GeoNames boyut ve lisans teyidi, mağaza komisyon indirimi programları, Apple 5.1.2(i) güncel metni.
+marka/App Store/alan adı kontrolleri, Apple Developer hesabı, avukat ve muhasebeci maddeleri (gizlilik metni, W-8BEN), GeoNames kaynak gösterimi (hakkında ekranı), mağaza komisyon indirimi programları, Apple 5.1.2(i) güncel metni.

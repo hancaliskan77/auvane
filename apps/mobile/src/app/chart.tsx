@@ -52,7 +52,7 @@ export default function Chart() {
   const first = String(birth.name).split(' ')[0];
   const [y, m, d] = String(birth.birth_date).split('-').map(Number);
   const [hh, mi] = birth.time_known ? String(birth.birth_time).split(':').map(Number) : [0, 0];
-  const place = String(birth.place_name).split(',').slice(0, 2).join(',');
+  const place = String(birth.place_name).split(',').slice(0, 2).join(',').trim();
 
   const western = [`${signOf(n.sun)} Sun`, `${signOf(n.moon)} Moon`];
   if (n.ascendant !== undefined) western.push(`${signOf(n.ascendant)} Rising${nearSignBoundary(n.ascendant, 2) ? ' (not certain)' : ''}`);
