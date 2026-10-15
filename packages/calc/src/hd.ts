@@ -17,7 +17,7 @@ function trueNode(date: Date): number {
     - 0.1226 * Math.sin(2 * D * rad) + 0.1176 * Math.sin(2 * F * rad) - 0.0801 * Math.sin(2 * (L - F) * rad)));
 }
 const PLANETS = ['Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
-function longitudes(date: Date): Record<string, number> {
+export function longitudes(date: Date): Record<string, number> {
   const o: Record<string, number> = { Sun: A.SunPosition(date).elon, Moon: A.EclipticGeoMoon(date).lon };
   for (const b of PLANETS) {
     const e = A.RotateVector(A.Rotation_EQJ_ECT(date), A.GeoVector(b as A.Body, date, true));

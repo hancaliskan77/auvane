@@ -51,6 +51,7 @@ Kullanıcıya yanıtlar **Türkçe, kısa ve sade** olsun. Kod, commit mesajlar�
 ## Çalışma kuralları
 - **Konuşma kuralı (kalıcı, değişmez):** Kullanıcılar yazılımcı değil, "yazılımcıların üst aklı". Hiç bilmeyen biriyle konuşur gibi, çok kısa ve sade yaz; teknik terim kullanma. Karmaşık bir durumda, istenmese bile önce şema/görsel (ASCII diyagram veya artifact) ile anlat.
 - Yapım sırası ve her adımın "bitti sayılma kontrolü" şartnamede (bkz. `docs/LINKS.md`). Kontrol geçmeden sonraki adıma geçme.
+- Sunucu fonksiyonları (`supabase/functions/*`) `npm run build:functions` (packages/calc) ile hesap koduyla birlikte paketlenir; yüklenen dosya `dist/index.js`'tir.
 - Hesap testleri: `cd packages/calc && npm install && npm test` (`ref/` eski referanstır). Hesap kodu değişirse önce test ekle/güncelle. Testler geçmeden birleştirme yok.
 - Anahtarları koda yazma. `.env` dosyaları git'e girmez. Gizli anahtarlar GitHub, Expo (EAS) ve Supabase'in gizli alanlarında durur. Uygulamaya yalnız herkese açık Supabase anahtarı girer.
 - Depo **özel (private)** kalır. `ref/hd.test.mjs` içinde KadirHan'ın kişisel doğum bilgileri var; depoyu public yapma, başkasıyla paylaşma.

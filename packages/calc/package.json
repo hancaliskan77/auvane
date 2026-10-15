@@ -6,8 +6,8 @@
   "main": "src/index.ts",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "tsx test/calc.test.ts && tsx test/hd.test.ts && tsx test/birth.test.ts && tsx test/natal.test.ts && tsx test/chinese.test.ts && tsx test/arcana.test.ts",
-    "build:register": "esbuild ../../supabase/functions/register/index.ts --bundle --format=esm --platform=neutral --alias:astronomy-engine=npm:astronomy-engine@2.1.19 --alias:luxon=npm:luxon@3.7.2 --alias:lunar-javascript=npm:lunar-javascript@1.7.7 --external:npm:* --outfile=../../supabase/functions/register/dist/index.js"
+    "test": "tsx test/calc.test.ts && tsx test/hd.test.ts && tsx test/birth.test.ts && tsx test/natal.test.ts && tsx test/chinese.test.ts && tsx test/arcana.test.ts && tsx test/sky.test.ts",
+    "build:functions": "node ../../supabase/build.mjs"
   },
   "dependencies": {
     "astronomy-engine": "^2.1.19",

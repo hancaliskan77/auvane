@@ -2,11 +2,26 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { arcanaName, moonPhase, nearSignBoundary, signOf } from '@auvane/calc';
+import { arcanaName, dailySentence, moonPhase, nearSignBoundary, signOf, skyAt, type Sky } from '@auvane/calc';
 import { fmtDate, fmtTime, monthName } from '../lib/format';
 import { supabase } from '../lib/supabase';
 import { c, fonts } from '../lib/theme';
 import { Muted } from '../lib/ui';
+
+// The user's own calendar date (spec: local date decides which day's sky is used).
+function localDay() {
+  const t = new Date();
+  return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+}
+
+/** Today's shared sky: stored by the nightly job; if that row is missing, compute the same thing locally. */
+async function loadSky(day: string): Promise<Sky> {
+  try {
+    const { data } = await supabase.from('sky_daily').select('longitudes').eq('day', day).maybeSingle();
+    if (data?.longitudes) return data.longitudes as Sky;
+  } catch { /* fall through */ }
+  return skyAt(day);
+}
 
 const THEMES = ['Personality', 'Relationships', 'Career', 'Spiritual path'];
 
@@ -20,17 +35,18 @@ function Line({ k, v }: { k: string; v: string }) {
 }
 
 export default function Chart() {
-  const [state, setState] = useState<{ chart: any; birth: any } | 'loading' | 'missing' | 'error'>('loading');
+  const [state, setState] = useState<{ chart: any; birth: any; sky: Sky } | 'loading' | 'missing' | 'error'>('loading');
 
   useEffect(() => {
     (async () => {
       try {
-        const [{ data: chart, error: e1 }, { data: birth, error: e2 }] = await Promise.all([
+        const [{ data: chart, error: e1 }, { data: birth, error: e2 }, sky] = await Promise.all([
           supabase.from('charts').select('*').maybeSingle(),
           supabase.from('birth_inputs').select('*').maybeSingle(),
+          loadSky(localDay()),
         ]);
         if (e1 || e2) throw e1 ?? e2;
-        setState(chart && birth ? { chart, birth } : 'missing');
+        setState(chart && birth ? { chart, birth, sky } : 'missing');
       } catch { setState('error'); }
     })();
   }, []);
@@ -47,7 +63,7 @@ export default function Chart() {
     );
   }
 
-  const { chart, birth } = state;
+  const { chart, birth, sky } = state;
   const n = chart.natal, num = chart.numerology, hd = chart.human_design, mx = chart.matrix;
   const first = String(birth.name).split(' ')[0];
   const [y, m, d] = String(birth.birth_date).split('-').map(Number);
@@ -67,6 +83,11 @@ export default function Chart() {
           <Muted style={{ marginTop: 6 }}>
             Born {monthName(m).slice(0, 3)} {d}, {y}{birth.time_known ? ` · ${fmtTime(hh, mi)}` : ''} · {place}
           </Muted>
+        </View>
+
+        <View style={{ padding: 16, borderRadius: 14, backgroundColor: c.card, borderWidth: 1, borderColor: c.border, gap: 8 }}>
+          <Text style={{ color: c.gold, fontSize: 12, letterSpacing: 1 }}>TODAY</Text>
+          <Text style={{ color: c.text, fontSize: 16, lineHeight: 24 }}>{dailySentence(sky)}</Text>
         </View>
 
         <View style={{ gap: 1, backgroundColor: c.border, borderRadius: 14, overflow: 'hidden' }}>
