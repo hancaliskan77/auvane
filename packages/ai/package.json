@@ -1,0 +1,12 @@
+{
+  "name": "@auvane/ai",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "tsx test/prompt.test.ts && tsx test/validate.test.ts && tsx test/budget.test.ts && tsx test/generate.test.ts"
+  },
+  "devDependencies": { "@types/node": "^22.0.0", "tsx": "^4.19.0", "typescript": "^5.6.0" }
+}

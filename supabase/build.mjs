@@ -7,7 +7,7 @@ const esbuild = require('esbuild');
 const calcDir = new URL('../packages/calc/node_modules/', import.meta.url);
 const ver = (p) => JSON.parse(readFileSync(new URL(`${p}/package.json`, calcDir), 'utf8')).version;
 
-for (const name of ['register', 'sky']) {
+for (const name of ['register', 'sky', 'story', 'unlock-theme']) {
   await esbuild.build({
     entryPoints: [new URL(`functions/${name}/index.ts`, import.meta.url).pathname],
     outfile: new URL(`functions/${name}/dist/index.js`, import.meta.url).pathname,
