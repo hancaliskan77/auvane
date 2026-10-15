@@ -5,10 +5,17 @@ import {
   resolveBirth, natalPoints, lifePath, nameNumbers, destinyMatrix, humanDesign, chineseZodiac,
 } from '../../../packages/calc/src/index.ts';
 
+// Browsers (the web build) send a preflight request first; answer it and allow the app to call us.
+const cors = {
+  'access-control-allow-origin': '*',
+  'access-control-allow-headers': 'authorization, x-client-info, apikey, content-type',
+  'access-control-allow-methods': 'POST, OPTIONS',
+};
 const json = (b: unknown, status = 200) =>
-  new Response(JSON.stringify(b), { status, headers: { 'content-type': 'application/json' } });
+  new Response(JSON.stringify(b), { status, headers: { ...cors, 'content-type': 'application/json' } });
 
 Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
   const url = Deno.env.get('SUPABASE_URL')!;
   const auth = req.headers.get('Authorization') ?? '';
   const asUser = createClient(url, Deno.env.get('SUPABASE_ANON_KEY')!, { global: { headers: { Authorization: auth } } });
