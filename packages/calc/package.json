@@ -6,7 +6,7 @@
   "main": "src/index.ts",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "tsx test/calc.test.ts && tsx test/hd.test.ts && tsx test/birth.test.ts && tsx test/natal.test.ts && tsx test/chinese.test.ts && tsx test/arcana.test.ts && tsx test/sky.test.ts",
+    "test": "tsx test/calc.test.ts && tsx test/hd.test.ts && tsx test/birth.test.ts && tsx test/natal.test.ts && tsx test/chinese.test.ts && tsx test/arcana.test.ts && tsx test/sky.test.ts && tsx test/hd.crosscheck.test.ts",
     "build:functions": "node ../../supabase/build.mjs"
   },
   "dependencies": {
