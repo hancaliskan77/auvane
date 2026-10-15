@@ -1,8 +1,8 @@
 // register: consent-gated, idempotent. Stores birth input, computes our own chart, saves it.
-// RoxyAPI cross-check (verification_status) is wired once roxy.ts endpoints are filled in.
+// Everything is computed in-house (packages/calc); no external astrology API is called.
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import {
-  resolveBirth, natalPoints, lifePath, nameNumbers, destinyMatrix, humanDesign,
+  resolveBirth, natalPoints, lifePath, nameNumbers, destinyMatrix, humanDesign, chineseZodiac,
 } from '../../../packages/calc/src/index.ts';
 
 const json = (b: unknown, status = 200) =>
@@ -36,6 +36,7 @@ Deno.serve(async (req) => {
     natal: { sun: natal.sun, moon: natal.moon, ...(timeKnown ? { ascendant: natal.ascendant } : {}) },
     numerology: { lifePath: lifePath(y, m, d), ...nameNumbers(b.name) },
     matrix: destinyMatrix(y, m, d),
+    chinese: chineseZodiac(y, m, d),
     human_design: timeKnown ? humanDesign(res.utc) : null, // hidden when birth time unknown
   };
 
@@ -49,6 +50,6 @@ Deno.serve(async (req) => {
     utc_offset_minutes: res.offsetMinutes, birth_utc: timeKnown ? res.utc.toISOString() : null,
   });
   const { data: saved } = await admin.from('charts')
-    .insert({ user_id: user.id, ...chart, verification_status: 'pending' }).select().single();
+    .insert({ user_id: user.id, ...chart }).select().single();
   return json({ chart: saved, cached: false });
 });

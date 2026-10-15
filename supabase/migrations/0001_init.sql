@@ -29,8 +29,6 @@ create table birth_inputs (
 create table charts (
   user_id uuid primary key references profiles(id) on delete cascade,
   natal jsonb, human_design jsonb, chinese jsonb, numerology jsonb, matrix jsonb,
-  verification_status text not null default 'pending' check (verification_status in ('pending','ok','failed')),
-  verification_diff jsonb,
   version int not null default 1,
   created_at timestamptz not null default now()
 );
